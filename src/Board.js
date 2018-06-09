@@ -45,6 +45,51 @@ export default class Board extends React.Component{
     return stack;
   }
 
+  shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+  }
+
+  initializeAutomatically(){
+    let newGrid = this.state.grid;
+    let positionBounds;
+    let pieces = this.initializeStack(); 
+    this.shuffleArray(pieces);
+    if(this.state.phase !== 0){
+      return
+    }
+
+    if(this.state.player === 'W'){
+      positionBounds = {'min' : 6, 'max' : 9}
+    }else{
+      positionBounds = {'min' : 0, 'max' : 3};
+    }
+
+    
+    this.state.grid.forEach((element,index)=> {
+      if(index >= positionBounds.min && index <= positionBounds.max){
+        element.forEach(
+          (square, yIndex) => {
+            newGrid[index][yIndex] = {'player': this.state.player, 'piece': pieces.pop()}
+            console.log(newGrid[index][yIndex]);
+          }) 
+
+      }
+    });
+    this.setState({'grid': newGrid})
+    if(this.state.player === 'W'){
+      this.setState({'whitePieces':[], 'player':'B'}) 
+    }else{
+      this.setState({'blackPieces':[], 'player':'B', 'phase':1 })
+    }
+
+  }
+
+
   newBoard(){
     var arr = Array(10).fill().map(x => Array(10).fill("+"));
     arr[4][2] = arr[4][3] = arr[5][2] = arr[5][3] = "X";
@@ -57,14 +102,6 @@ export default class Board extends React.Component{
   handleReset(){
     //TODO Button
     this.setState({'phase':0 , 'grid':this.newBoard()});
-  }
-
-  playerSetup(isWhite){
-    if(isWhite){
-
-
-
-    }
   }
 
   handleClick(x, y){
@@ -83,10 +120,18 @@ export default class Board extends React.Component{
           if(this.state.whitePieces === undefined || this.state.whitePieces.length === 0){
             this.setState({'player' : 'B'})
           }
+          if(this.state.blackPieces === undefined || this.state.blackPieces.length === 0){
+            this.setState({'phase' : 1, 'player' : 'W'})
+          }
         }
                   
       }
       
+    }
+    if(this.state.phase === 1){
+        localStorage.setItem('from', [x,y] );
+        console.log(localStorage.getItem('from'))
+
     }
   }
 
@@ -195,6 +240,7 @@ export default class Board extends React.Component{
       </table>
       </div>
       <br />
+      <button onClick={() => this.initializeAutomatically()}>Automaticaly</button>
       </div>
     )
   } 
