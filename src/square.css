@@ -1,0 +1,19 @@
+td {
+    border-color: black;
+    border: .5px solid black;
+    width: 10%;
+    height: 10%;
+}
+
+td > img {
+    width: 40px;
+    height: 40px;
+
+
+}
+
+.selectedPiece > img {
+    -webkit-box-shadow: inset 0px 0px 5px 5px rgba(140,140,140,1);
+    -moz-box-shadow: inset 0px 0px 5px 5px rgba(140,140,140,1);
+    box-shadow: inset 0px 0px 5px 5px rgba(140,140,140,1);
+} 

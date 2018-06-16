@@ -1,0 +1,38 @@
+img:hover {
+    transition: linear .5s;
+    transform: scale(1.7);
+  }
+
+.game-board {
+    text-align: center;
+    margin: auto;
+    width: 600px;
+    height: 600px;
+    border: .5px solid #ccc;
+    table-layout: fixed;
+}
+
+h2{
+    font-size: 36px;
+    margin-bottom: 0px; 
+}
+
+@media only screen and (max-width: 450px){
+    .game-board{
+        width: 300px;
+        height: 300px;
+    }
+
+}
+
+@media only screen and (max-width: 720px){
+    .game-board{
+        width: 450px;
+        height: 450px;
+    }
+
+}
+
+
+
+
